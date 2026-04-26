@@ -861,11 +861,9 @@
       const teamB = safeResolve(els.teamBInput, teamBPool);
       if (!teamA || !teamB) return;
 
-      if (teamA.sport_group !== teamB.sport_group) {
-        els.warning.textContent = "NEST blocks boys-vs-girls matchups. Use Comparison Mode for cross-pool analogs.";
-        return;
-      }
-      els.warning.textContent = "";
+      els.warning.textContent = teamA.sport_group !== teamB.sport_group
+        ? "Cross-pool matchup enabled. Treat these as model-based comparisons rather than literal same-division odds."
+        : "";
 
       const dist = scoreDistribution(teamA, teamB, els.location.value);
       const probabilityA = dist.probabilityA;
