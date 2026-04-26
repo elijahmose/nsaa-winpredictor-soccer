@@ -847,17 +847,15 @@
 
     function renderTeamInputs() {
       const pool = matchupPool();
-      const currentA = safeResolve(els.teamAInput, pool);
-      const restrictSport = currentA?.sport_group || els.sportFilter.value || "";
       fillMenu(els.teamOptionsA, pool, "", els.teamAInput.value);
-      const teamBPool = fillMenu(els.teamOptionsB, pool, restrictSport, els.teamBInput.value);
+      const teamBPool = fillMenu(els.teamOptionsB, pool, "", els.teamBInput.value);
       safeResolve(els.teamBInput, teamBPool);
     }
 
     function renderMatchup() {
       const pool = matchupPool();
       const teamA = safeResolve(els.teamAInput, pool);
-      const teamBPool = pool.filter((team) => !teamA || team.sport_group === teamA.sport_group);
+      const teamBPool = pool;
       const teamB = safeResolve(els.teamBInput, teamBPool);
       if (!teamA || !teamB) return;
 
@@ -995,8 +993,7 @@
     });
     wireCombo(els.teamBInput, els.teamOptionsB, () => {
       const pool = matchupPool();
-      const teamA = safeResolve(els.teamAInput, pool);
-      return { pool, restrictSportGroup: teamA?.sport_group || els.sportFilter.value || "" };
+      return { pool, restrictSportGroup: "" };
     }, renderMatchup);
     wireCombo(els.comparisonInput, els.comparisonOptions, () => ({ pool: sortedTeams }), renderComparisons);
   </script>
